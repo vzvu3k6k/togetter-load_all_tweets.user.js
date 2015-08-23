@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name           Togetter: 続きを全部読む
-// @description    「続きを読む」をクリックしたら残りを全て表示する
+// @name           Togetter: 残りを全部読む
+// @description    「残りを読む」をクリックしたら残りを全て表示する
 // @version        1.0
 // @author         vzvu3k6k
 // @match          http://togetter.com/li/*
