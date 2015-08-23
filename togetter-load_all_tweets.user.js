@@ -118,7 +118,7 @@ function wait (delay) {
 function appendNewPage (newDocument, url) {
   var hr = document.createElement('hr')
   hr.setAttribute('class', 'togetter-more_pagination_page_separator')
-  var p = document.createElement('togetter-more_pagination_page_info')
+  var p = document.createElement('p')
   p.textContent = 'page: '
   var a = document.createElement('a')
   a.setAttribute('class', 'togetter-more_pagination_page_info')
