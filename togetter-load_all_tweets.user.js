@@ -12,17 +12,19 @@
 
 // js-standard-style (https://github.com/feross/standard)
 
-var buttonToReadRest = document.querySelector('.more_tweet_box a')
-
 var pageId = window.location.pathname.match(/\/li\/(\d+)$/)[1]
 
-window.addEventListener('click', function (event) {
+var buttonToReadRest = document.querySelector('.more_tweet_box a')
+
+var onclick = function (event) {
   if (event.target !== buttonToReadRest) return
   if (event.button !== 0) return
   event.preventDefault()
   event.stopPropagation()
+  window.removeEventListener('click', onclick)
   start()
-}, true)
+}
+window.addEventListener('click', onclick, true)
 
 function start () {
   return loadMore(buttonToReadRest).then(
