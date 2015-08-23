@@ -10,12 +10,12 @@
 // @license        CC0
 // ==/UserScript==
 
-var button = getMoreButton();
+var buttonToReadRest = document.querySelector('.more_tweet_box a');
 
 var pageId = location.pathname.match(/\/li\/(\d+)$/)[1];
 
 window.addEventListener('click', function(event){
-  if(event.target != button) return;
+  if(event.target != buttonToReadRest) return;
   if(event.button != 0) return;
   event.preventDefault();
   event.stopPropagation();
@@ -23,7 +23,7 @@ window.addEventListener('click', function(event){
 }, true);
 
 function start(){
-  return loadMore(button).then(
+  return loadMore(buttonToReadRest).then(
     wait(1000)
   ).then(function(nextUrl){
     return recNext(nextUrl);
@@ -40,10 +40,6 @@ function start(){
   }).catch(function(err){
     console.error(err);
   });
-}
-
-function getMoreButton(){
-  return document.querySelector('.more_tweet_box a');
 }
 
 function loadMore(button){
