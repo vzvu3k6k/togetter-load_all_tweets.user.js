@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Togetter: 残りを全部読む
 // @description    「残りを読む」をクリックしたら残りを全て表示する
-// @version        1.0
+// @version        1.1
 // @author         vzvu3k6k
 // @match          http://togetter.com/li/*
 // @grant          none
