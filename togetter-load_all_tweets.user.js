@@ -131,10 +131,9 @@ function appendNewPage (newDocument, url) {
   var nodes = [hr, p].concat(newTweetBoxChildren)
 
   var box = document.querySelector('.tweet_box')
-  var c
-  while ((c = nodes.shift())) {
-    box.appendChild(c)
-  }
+  nodes.forEach(function (node) {
+    box.appendChild(node)
+  })
 }
 
 function xhr (url) {
