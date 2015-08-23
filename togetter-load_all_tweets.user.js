@@ -21,23 +21,24 @@ function main(){
     if(event.button != 0) return;
     event.preventDefault();
     event.stopPropagation();
-    loadAll();
+    start();
   }, true);
 
-  function loadAll(){
-    var button = getMoreButton();
-    if(!button) return Promise.resolve();
-
+  function start(){
     return loadMore(button).then(
       wait(1000)
     ).then(function(nextUrl){
-      if(nextUrl){
-        return loadNext(nextUrl);
+      return recNext(nextUrl);
+
+      function recNext(nextUrl){
+        if(nextUrl){
+          return wait(1000)(nextUrl)
+            .then(loadNext)
+            .then(recNext);
+        }else{
+          return Promise.resolve();
+        }
       }
-    }).then(
-      wait(1000)
-    ).then(function(){
-      loadAll();
     }).catch(function(err){
       console.error(err);
     });
@@ -60,28 +61,31 @@ function main(){
     return apiMoreTweets(currentPageNum).then(function(html){
       /* based on `tgtr.moreTweets` */
       $("#more_tweet_box_" + pageId).replaceWith(html);
-      $.lazy();
+    }).then(afterLoad);
+  }
 
-      var nextLink = document.querySelector('.tweet_box .pagenation a:last-child');
-      var nextUrl;
-      if(nextLink && nextLink.textContent == '次へ'){
-        nextUrl = nextLink.href;
-      }else{
-        nextUrl = null;
-      }
+  function afterLoad(){
+    /* based on `tgtr.moreTweets` */
+    $.lazy();
 
-      document.querySelector('.tweet_box .pagenation').remove();
+    var nextLink = document.querySelector('.tweet_box .pagenation a:last-child');
+    var nextUrl;
+    if(nextLink && nextLink.textContent == '次へ'){
+      nextUrl = nextLink.href;
+    }else{
+      nextUrl = null;
+    }
 
-      return nextUrl;
-    });
+    document.querySelector('.tweet_box .pagenation').remove();
+
+    return nextUrl;
   }
 
   function loadNext(nextUrl){
     return xhr(nextUrl).then(function(xhrEvent){
       var newDocument = xhrEvent.target.responseXML;
       appendNewPage(newDocument, nextUrl);
-      $.lazy();
-    });
+    }).then(afterLoad);
   }
 
   function getPageNum(url){
