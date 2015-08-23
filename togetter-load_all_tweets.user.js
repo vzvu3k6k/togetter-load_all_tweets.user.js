@@ -66,7 +66,9 @@ function main(){
 
   function afterLoad(){
     /* based on `tgtr.moreTweets` */
+    emojiParser();
     $.lazy();
+    twttr.widgets.load();
 
     var nextLink = document.querySelector('.tweet_box .pagenation a:last-child');
     var nextUrl;
